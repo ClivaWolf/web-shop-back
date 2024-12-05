@@ -1,5 +1,6 @@
+import { Order } from 'src/resources/order/entities/order.entity';
 import { Product } from 'src/resources/product/entities/product.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
 
 @Entity()
 export class Shop {
@@ -15,6 +16,9 @@ export class Shop {
     @Column()
     deliveryPayment: boolean;
 
-    @ManyToMany(type => Product, product => product.shops)
+    @ManyToMany(() => Product, product => product.shops)
     products: Product[]
+
+    @OneToMany(() => Order, order => order.shop)
+    orders: Order[]
 }

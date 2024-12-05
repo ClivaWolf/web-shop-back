@@ -8,6 +8,8 @@ import { DatabaseModule } from './database.module';
 import { TypeOrmConfig } from './type-orm.config';
 import { ShopModule } from 'src/resources/shop/shop.module';
 import { ProductModule } from 'src/resources/product/product.module';
+import { DeliveryModule } from 'src/resources/delivery/delivery.module';
+import { OrderModule } from 'src/resources/order/order.module';
 
 @Module({
   imports: [
@@ -20,7 +22,9 @@ import { ProductModule } from 'src/resources/product/product.module';
       inject: [ConfigService, TypeOrmConfig],
     }),
     ShopModule,
-    ProductModule],
+    ProductModule,
+    DeliveryModule,
+    OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })
