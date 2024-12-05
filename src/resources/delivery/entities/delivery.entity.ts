@@ -11,17 +11,17 @@ export class Delivery {
   order: Order;
 
   @Column()
-  deliveryDate: Date; 
+  delivery_date: Date; 
 
   @Column()
-  deliveryTime: Date;
+  delivery_time: Date;
 
   @Column()
-  deliveryAddress: string;
+  delivery_address: string;
 
   @Column()
-  customerName: string;
+  customer_name: string;
 
   @Column()
-  courierName: string;
+  courier_name: string;
 }

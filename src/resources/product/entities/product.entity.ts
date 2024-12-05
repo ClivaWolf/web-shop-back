@@ -26,13 +26,13 @@ export class Product {
     price: number;
 
     @Column()
-    warrantyPeriod: string;
+    warranty_period: string;
 
     @Column()
-    imageUrl: string;
+    image_url: string;
 
-    @ManyToMany(() => Shop, (shop) => shop.products)
-    @JoinTable()
+    @ManyToMany(() => Shop, (shop) => shop.products, {  })
+    @JoinTable({ name: 'shop_product' })
     shops: Shop[];
 
     @OneToMany(() => Order, (order) => order.product)

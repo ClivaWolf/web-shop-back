@@ -16,19 +16,19 @@ export class Order {
     product: Product;
 
     @Column()
-    orderDate: Date;
+    order_tate: Date;
 
     @Column()
-    orderTime: Date;
+    order_time: Date;
 
     @Column()
     quantity: number;
 
     @Column()
-    customerName: string;
+    customer_name: string;
 
     @Column()
-    customerPhone: string;
+    customer_phone: string;
 
     @Column()
     confirmed: boolean;
