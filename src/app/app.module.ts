@@ -6,6 +6,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from './database.module';
 import { TypeOrmConfig } from './type-orm.config';
+import { ShopModule } from 'src/resources/shop/shop.module';
+import { ProductModule } from 'src/resources/product/product.module';
+import { DeliveryModule } from 'src/resources/delivery/delivery.module';
+import { OrderModule } from 'src/resources/order/order.module';
 
 @Module({
   imports: [
@@ -16,7 +20,11 @@ import { TypeOrmConfig } from './type-orm.config';
         return typeOrmConfig.createConnectionOptions();
       },
       inject: [ConfigService, TypeOrmConfig],
-    })],
+    }),
+    ShopModule,
+    ProductModule,
+    DeliveryModule,
+    OrderModule],
   controllers: [AppController],
   providers: [AppService],
 })
