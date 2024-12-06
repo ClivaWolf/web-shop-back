@@ -17,9 +17,9 @@ export class ShopController {
     return this.shopService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.shopService.findOne(+id);
+  @Get(':code')
+  findOne(@Param('code') code: string) {
+    return this.shopService.findOneByCode(code);
   }
 
   @Patch(':id')

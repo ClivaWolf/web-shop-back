@@ -14,7 +14,7 @@ export class Shop {
     email: string;
 
     @Column()
-    deliveryPayment: boolean;
+    delivery_payment: boolean;
 
     @ManyToMany(() => Product, product => product.shops)
     products: Product[]

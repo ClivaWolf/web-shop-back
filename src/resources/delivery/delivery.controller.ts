@@ -19,7 +19,7 @@ export class DeliveryController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.deliveryService.findOne(+id);
+    return this.deliveryService.findOneById(+id);
   }
 
   @Patch(':id')

@@ -1,7 +1,7 @@
 import { Delivery } from 'src/resources/delivery/entities/delivery.entity';
 import { Product } from 'src/resources/product/entities/product.entity';
 import { Shop } from 'src/resources/shop/entities/shop.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne, CreateDateColumn } from 'typeorm';
 
 
 @Entity()
@@ -9,26 +9,29 @@ export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Shop, (shop) => shop.orders)
+    @Column({ unique: true })
+    code: string;
+
+    @ManyToOne(() => Shop, (shop) => shop.orders, { nullable: true })
     shop: Shop;
 
-    @ManyToOne(() => Product, (product) => product.orders)
+    @ManyToOne(() => Product, (product) => product.orders, { nullable: true })
     product: Product;
 
-    @Column()
-    orderDate: Date;
+    @CreateDateColumn()
+    order_date: Date;
 
     @Column()
-    orderTime: Date;
+    order_time: Date;
 
     @Column()
     quantity: number;
 
     @Column()
-    customerName: string;
+    customer_name: string;
 
     @Column()
-    customerPhone: string;
+    customer_phone: string;
 
     @Column()
     confirmed: boolean;
