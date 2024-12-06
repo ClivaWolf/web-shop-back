@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateShopDto } from './dto/create-shop.dto';
 import { UpdateShopDto } from './dto/update-shop.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -31,33 +31,37 @@ export class ShopService {
     }
   }
 
-  findAll() {
+  async findAll() {
     try {
-      return this.shopRepository.find();
+      return await this.shopRepository.find();
     } catch (error) {
       throw error;
     }
   }
 
-  findOneByCode(code: string) {
+  async findOneByCode(code: string) {
     try {
-      return this.shopRepository.findOne({ where: { code } });
+      const shop = await this.shopRepository.findOne({ where: { code } });
+      if (shop !== null) {
+        return shop
+      }
+      throw new NotFoundException
     } catch (error) {
       throw error;
     }
   }
 
-  update(id: number, updateShopDto: UpdateShopDto) {
+  async update(id: number, updateShopDto: UpdateShopDto) {
     try {
-      return this.shopRepository.update(id, updateShopDto);
+      return await this.shopRepository.update(id, updateShopDto);
     } catch (error) {
       throw error;
     }
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     try {
-      return this.shopRepository.delete(id);
+      return await this.shopRepository.delete(id);
     } catch (error) {
       throw error;
     }

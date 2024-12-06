@@ -7,8 +7,8 @@ export class Product {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
-    code: number;
+    @Column({ unique: true })
+    code: string;
 
     @Column()
     name: string;
@@ -28,13 +28,13 @@ export class Product {
     @Column()
     warranty_period: string;
 
-    @Column()
+    @Column({ nullable: true })
     image_url: string;
 
-    @ManyToMany(() => Shop, (shop) => shop.products, {  })
+    @ManyToMany(() => Shop, (shop) => shop.products, { nullable: true })
     @JoinTable({ name: 'shop_product' })
     shops: Shop[];
 
-    @OneToMany(() => Order, (order) => order.product)
+    @OneToMany(() => Order, (order) => order.product, { nullable: true })
     orders: Order[];
 }

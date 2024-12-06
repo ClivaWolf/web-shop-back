@@ -1,26 +1,68 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from './entities/product.entity';
+import { QueryFailedError, Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(
+    @InjectRepository(Product)
+    private readonly productRepository: Repository<Product>,
+  ) { }
+  async create(createProductDto: CreateProductDto) {
+    try {
+      // Проверяем наличие продукта с таким же кодом
+      const existingProduct = await this.productRepository.findOne({ where: { code: createProductDto.code } });
+
+      if (existingProduct) {
+        throw new ConflictException('Shop code already exists');
+      }
+
+      const product = await this.productRepository.create(createProductDto);
+      return await this.productRepository.save(product);
+    } catch (error) {
+      if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
+        throw new ConflictException('Shop code already exists');
+      }
+    }
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findAll() {
+    try {
+      return await this.productRepository.find();
+    } catch (error) {
+      throw error;
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOneByCode(code: string) {
+    try {
+      const product = await this.productRepository.findOne({ where: { code } });
+      if (product !== null) {
+        console.log(product);
+        return product;
+      }
+      throw new NotFoundException;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: number, updateProductDto: UpdateProductDto) {
+    try {
+      return await this.productRepository.update(id, updateProductDto);
+    } catch (error) {
+      throw error;
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: number) {
+    try {
+      return await this.productRepository.delete(id);
+    } catch (error) {
+      throw error;
+    }
   }
 }
