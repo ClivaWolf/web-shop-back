@@ -1,5 +1,5 @@
 import { Order } from 'src/resources/order/entities/order.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, CreateDateColumn } from 'typeorm';
 
 @Entity()
 export class Delivery {
@@ -10,7 +10,7 @@ export class Delivery {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @Column()
+  @CreateDateColumn()
   delivery_date: Date; 
 
   @Column()
