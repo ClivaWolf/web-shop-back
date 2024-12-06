@@ -17,14 +17,14 @@ export class ProductService {
       const existingProduct = await this.productRepository.findOne({ where: { code: createProductDto.code } });
 
       if (existingProduct) {
-        throw new ConflictException('Shop code already exists');
+        throw new ConflictException('Product code already exists');
       }
 
       const product = await this.productRepository.create(createProductDto);
       return await this.productRepository.save(product);
     } catch (error) {
       if (error instanceof QueryFailedError && error.message.includes('duplicate key')) {
-        throw new ConflictException('Shop code already exists');
+        throw new ConflictException('Product code already exists');
       }
     }
   }

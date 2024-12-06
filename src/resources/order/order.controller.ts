@@ -17,9 +17,9 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.orderService.findOne(+id);
+  @Get(':code')
+  findOne(@Param('code') code: string) {
+    return this.orderService.findOneByCode(code);
   }
 
   @Patch(':id')
